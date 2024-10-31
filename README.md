@@ -1,5 +1,5 @@
 # ciallo_web
 Ciallo～(∠・ω&lt; )⌒★
 
-改项目修改与 https://ciallo.cc  
+这个项目是由 https://ciallo.cc 修改过来哒~  
 Cloudflare Pages 部署的网站 https://ciallo.mikoto.zip
