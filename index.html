@@ -1,0 +1,109 @@
+<html lang="zh-CN">
+<!-- 这个网站是由 ciallo.cc 修改过来哒~ 感谢「リウ・ディ」さま~ -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ciallo～(∠・ω< )⌒★</title>
+    <link rel="shortcut icon" href="./favicon.ico">
+    <style>
+        .center {
+            width: 540px;
+            height: 120px;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        body {
+            overflow: hidden; /* 隐藏滚动条 */
+            user-select: none; /* 禁用所有元素的鼠标选择操作 */
+            -webkit-user-select: none; /* 禁用 Chrome 和 Safari 的鼠标选择操作 */
+            -moz-user-select: none; /* 禁用 Firefox 的鼠标选择操作 */
+            -ms-user-select: none; /* 禁用 IE 的鼠标选择操作 */
+            background-color: #181A1B; /* 更改背景颜色 */
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="center">
+        <img src="./ciallo.gif" style="filter: invert(100%);" draggable="false">
+    </div>
+    <script src="./jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // 每秒生成一个弹幕
+            setInterval(createBulletScreen, 80);
+
+            // 随机生成弹幕内容、颜色、大小以及固定高度
+            function createBulletScreen() {
+                const texts = ["Ciallo～(∠・ω< )⌒★", "Ciallo～(∠・ω< )⌒☆"];
+                const text = texts[Math.floor(Math.random() * texts.length)];
+                const size = Math.floor(Math.random() * 20 + 5) + "px";
+                const topPosition = Math.floor(Math.random() * window.innerHeight) + "px";
+                
+                // 创建弹幕元素并设置样式
+                const bullet = $("<span></span>").text(text);
+                bullet.css({
+                    "position": "absolute",
+                    "white-space": "nowrap",
+                    "color": color16(),
+                    "font-size": size,
+                    "top": topPosition,
+                    "left": "100%", // 在屏幕外右侧生成
+                });
+
+                $("body").append(bullet);
+                
+                // 动画从右向左滚动弹幕
+                bullet.animate(
+                    { left: `-${bullet.width()}px` },
+                    16699,
+                    "linear",
+                    function() {
+                        bullet.remove(); // 动画结束后移除弹幕
+                    }
+                );
+            }
+
+            // 点击效果
+            $("body").click(function(e) {
+                const a = ["Ciallo～(∠・ω< )⌒★", "Ciallo～(∠・ω< )⌒☆"];
+                const $i = $("<span/>").text(a[Math.floor(Math.random() * a.length)]);
+                const x = e.pageX,
+                    y = e.pageY;
+                $i.css({
+                    "z-index": 999999,
+                    "top": y - 20,
+                    "left": x,
+                    "position": "absolute",
+                    "font-weight": "bold",
+                    "color": color16()
+                });
+                $("body").append($i);
+                play_sound('./ciallo.aac');
+                $i.animate({
+                    "top": y - 180,
+                    "opacity": 0
+                }, 1500, function() {
+                    $i.remove();
+                });
+            });
+        });
+
+        function color16(){
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function play_sound(url_data) {
+            const audio = new Audio(url_data);
+            audio.play().catch(function(error) {
+                console.error('播放音频时出错：', error);
+            });
+        }
+    </script>
+</body>
+</html>
